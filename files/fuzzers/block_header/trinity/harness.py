@@ -16,9 +16,9 @@ bls.Eth2BLS.use_noop_backend()
 
 class BlockHeaderTestCase(ssz.Serializable):
 
-    fields = [("pre", BeaconState), ("block", BeaconBlock)]
+    fields = [("pre", SerenityBeaconState), ("block", SerenityBeaconBlock)]
 
-    def __init__(self, *, pre: BeaconState, block: BeaconBlock) -> None:
+    def __init__(self, *, pre: SerenityBeaconState, block: SerenityBeaconBlock) -> None:
         super().__init__(pre=pre, block=block)
 
     def __str__(self) -> str:
