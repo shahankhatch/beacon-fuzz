@@ -5,9 +5,9 @@ import ssz
 from eth2.beacon.state_machines.forks.serenity.block_processing import (
     process_block_header,
 )
+from eth2.beacon.state_machines.forks.serenity.blocks import SerenityBeaconBlock
 from eth2.beacon.state_machines.forks.serenity.configs import SERENITY_CONFIG
-from eth2.beacon.types.blocks import BeaconBlock
-from eth2.beacon.types.states import BeaconState
+from eth2.beacon.state_machines.forks.serenity.states import SerenityBeaconState
 from eth_utils import ValidationError
 
 # TODO(gnattishness) check that this works
@@ -27,7 +27,7 @@ class BlockHeaderTestCase(ssz.Serializable):
 
 def FuzzerRunOne(input_data: bytes) -> typing.Optional[bytes]:
     # TODO(gnattishness) ensure abort if deserialize fails
-    test_case = ssz.decode(input_data, BlockHeaderTestCase)
+    test_case = ssz.decode(input_data, sedes=BlockHeaderTestCase)
 
     # TODO(gnattishness) any other relevant exceptions to catch?
     # TODO(gnattishness) do we validate signatures or not here?
