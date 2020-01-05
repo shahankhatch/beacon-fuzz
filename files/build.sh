@@ -1,4 +1,33 @@
 #!/bin/bash
+set +x
+alias realpath="python -c 'import os,sys;print os.path.realpath(sys.argv[1])'"
+alias realpath="readlink"
+
+cd /eth2 || exit
+
+#cd artemis
+#find . -iname *.sh #  -exec cat {} \;
+#find . -iname *.jar
+#find . -iname artemis
+#find . -iname *.zip
+#find . -iname *.tar.gz
+#pwd
+#ls
+#cat /eth2/artemis-0.8.2-SNAPSHOT/bin/artemis
+#/eth2/artemis-0.8.2-SNAPSHOT/bin/artemis
+
+#cd /eth2
+#pwd
+#ls -aR .
+
+#cd /eth2
+#cd lib/java && rm jfuzz && make jfuzz
+cd lib/java
+#ls -aR .
+sh ./test.sh
+
+
+exit
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 # shellcheck source=/dev/null
@@ -133,6 +162,8 @@ export GOPATH="$GOPATH:/eth2/lib/go:$ZRNT_GOPATH"
 
 echo "Saving exported env to /eth2/exported_env.sh"
 export -p >/eth2/exported_env.sh
+
+cd /eth2 || exit
 
 cd /eth2/fuzzers || exit
 # Recursively make all fuzzers

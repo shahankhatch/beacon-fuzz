@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm -rf artemis
+cp -R ../artemis .
+
 if [ "$#" -lt 3 ]; then
     echo "Specify the fuzzer you want to run, the fuzzer corpus directory, and the state corpus directory."
     echo "Any additional arguments are passed to the fuzzer."
@@ -25,7 +28,9 @@ REMAINING_ARGS="${tmp[*]:3}"
 docker build . -t eth2-fuzzers || exit
 
 docker run \
+    --rm -ti \
     -v "$FUZZER_CORPUS":/eth2/corpus \
     -v "$STATE_CORPUS_PATH":/eth2/state-corpus \
-    -t eth2-fuzzers /bin/sh -c \
-    "export ETH2_FUZZER_STATE_CORPUS_PATH=/eth2/state-corpus && /eth2/fuzzers/\"$1\"/fuzzer /eth2/corpus $REMAINING_ARGS"
+    -t eth2-fuzzers /bin/sh
+    #-c \
+    #"export ETH2_FUZZER_STATE_CORPUS_PATH=/eth2/state-corpus && /eth2/fuzzers/\"$1\"/fuzzer /eth2/corpus $REMAINING_ARGS"
