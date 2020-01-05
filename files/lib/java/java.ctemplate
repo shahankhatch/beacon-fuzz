@@ -20,7 +20,7 @@ JNIEnv* create_vm() {
 
 void invoke_class(JNIEnv* env) {
 	jclass helloWorldClass;
-	jmethodID mainMethod;
+	jmethodID mainMethod, testAttestationMethod, testAttestationMethod2;
 	jobjectArray applicationArgs;
 	jstring applicationArg0;
 
@@ -33,6 +33,26 @@ void invoke_class(JNIEnv* env) {
 	(*env)->SetObjectArrayElement(env, applicationArgs, 0, applicationArg0);
 
 	(*env)->CallStaticVoidMethod(env, helloWorldClass, mainMethod, applicationArgs);
+
+	testAttestationMethod = (*env)->GetStaticMethodID(env, helloWorldClass, "testAttestation", "([B[B)Z");
+
+
+	char* bytes;
+	int numBytes = 0;
+
+	jbyteArray array_beaconstate = (*env)->NewByteArray(env, numBytes);
+	(*env)->SetByteArrayRegion(env, array_beaconstate, 0, numBytes, (jbyte *) bytes);
+
+  jbyteArray array_attestation = (*env)->NewByteArray(env, numBytes);
+  (*env)->SetByteArrayRegion(env, array_attestation, 0, numBytes, (jbyte *) bytes);
+
+  jboolean res = (*env)->CallStaticBooleanMethod(env, helloWorldClass, testAttestationMethod, array_beaconstate, array_attestation);
+  printf("res:%d", res);
+
+  testAttestationMethod2 = (*env)->GetStaticMethodID(env, helloWorldClass, "testAttestationRetState", "([B[B)[B");
+
+  jarray res2 = (jarray) (*env)->CallStaticObjectMethod(env, helloWorldClass, testAttestationMethod2, array_beaconstate, array_attestation);
+//  printf("res2:%d", res2);
 }
 
 
