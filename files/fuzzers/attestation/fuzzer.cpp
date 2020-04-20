@@ -3,6 +3,7 @@
 #include <lib/go.h>
 #include <lib/python.h>
 #include <lib/rust.h>
+#include <lib/java.h>
 #include <lib/ssz-preprocess.h>
 
 #include <cstring>
@@ -51,6 +52,7 @@ std::shared_ptr<fuzzing::Python> pyspec = nullptr;
 std::shared_ptr<fuzzing::Python> trinity = nullptr;
 std::shared_ptr<fuzzing::Go> go = nullptr;
 std::shared_ptr<fuzzing::Lighthouse> lighthouse = nullptr;
+std::shared_ptt<fuzzing::Java> java = nullptr;
 
 std::unique_ptr<fuzzing::Differential> differential = nullptr;
 
@@ -58,7 +60,7 @@ extern "C" int LLVMFuzzerInitialize(int* argc, char*** argv) {
   differential = std::make_unique<fuzzing::Differential>();
 
   differential->AddModule(go = std::make_shared<fuzzing::Go>());
-  differential->AddModule(
+  differential->AddModule(java = std::make_shared<fuzzing::Java>());
       pyspec = std::make_shared<fuzzing::Python>(
           (*argv)[0], PY_SPEC_HARNESS_PATH, std::nullopt, PY_SPEC_VENV_PATH));
   /*

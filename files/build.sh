@@ -1,33 +1,17 @@
 #!/bin/bash
 set +x
+
+cp -Ra /eth2wd/* .
+
 alias realpath="python -c 'import os,sys;print os.path.realpath(sys.argv[1])'"
 alias realpath="readlink"
 
 cd /eth2 || exit
 
-#cd artemis
-#find . -iname *.sh #  -exec cat {} \;
-#find . -iname *.jar
-#find . -iname artemis
-#find . -iname *.zip
-#find . -iname *.tar.gz
-#pwd
-#ls
-#cat /eth2/artemis-0.8.2-SNAPSHOT/bin/artemis
-#/eth2/artemis-0.8.2-SNAPSHOT/bin/artemis
-
-#cd /eth2
-#pwd
-#ls -aR .
-
-#cd /eth2
-#cd lib/java && rm jfuzz && make jfuzz
 cd lib/java
-#ls -aR .
-sh ./test.sh
+source ./test.sh
 
-
-exit
+cd /eth2 || exit
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 # shellcheck source=/dev/null
@@ -40,7 +24,7 @@ export CXX=clang++-8
 #export LDLIBS
 
 # CPython
-mkdir cpython-install
+mkdir -p cpython-install
 CPYTHON_INSTALL_PATH="$(realpath cpython-install)"
 export CPYTHON_INSTALL_PATH
 cd cpython || exit
